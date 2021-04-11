@@ -1,0 +1,95 @@
+#include <iostream>
+
+using namespace std;
+
+class Person{
+    public:
+        string name,address, telp;
+        Person(string name, string address, int telp){
+            Person::name = name;
+            Person::address = address;
+            Person::telp = telp;
+        }
+        Person(){
+            name = " ";
+            address = " ";
+            telp = "0";
+        }
+};
+class Customer{
+    public:
+        Person person;
+        int custNumber;
+        bool mail;
+        Customer(){
+            custNumber = 0;
+            mail = false;
+        }
+        Customer(string nama, string address, string telp, int custNumber, bool mail){
+            person.name = nama;
+            person.address = address;
+            person.telp = telp;
+            Customer::custNumber = custNumber;
+            Customer::mail = mail;
+        }
+        void print(){
+            string isMail = (mail)? "True" : "False";
+            cout << "Name            : " << person.name << endl
+                 << "Alamat          : " << person.address << endl
+                 << "Telepon         : " << person.telp << endl
+                 << "Customer Number : " << custNumber << endl
+                 << "Waiting list Mail ?  : " << isMail << endl;
+        }
+        void inputData(int custNumber){
+            string input, nama, alamat, num;
+            cout << "Name            : ";cin >> ws; getline(cin, nama);
+            cout << "Alamat          : ";cin >> ws; getline(cin, alamat);
+            cout << "No telp         : ";cin >> num;
+            up:
+            cout << "Waiting list Mail (true/false) : "; cin >> input;
+            if((input == "True") || (input == "true")) mail = true;
+            else if((input == "False") || (input == "false")) mail = false;
+            else goto up;
+            person.name = nama;
+            person.address = alamat;
+            person.telp = num;
+            Customer::custNumber = custNumber;
+        }
+
+};
+int main(){
+    int n, x;
+    bool isLoop = true, check = false;
+    Customer customer[50];
+    cout << "-- List Customer--\n\n";
+    cout << "Masukkan Jumlah customer : "; cin >> n;
+    while(isLoop){
+        ulang:
+        cout << "-- Menu Pilihan --\n\n";
+        cout << "1. Masukkan Data Customer\n"
+             << "2. Tampilkan Data Customer\n"
+             << "3. Exit\n";
+        cout << "Menu : "; cin >> x;
+        switch(x){
+            case 1:
+                cout << endl;
+                for(int i = 1; i <= n; i++){
+                    cout << "Customer "<< i << endl;
+                    customer[i-1].inputData(i);
+                    cout << endl;
+                }break;
+            case 2:
+                cout << endl;
+                for(int i = 1; i <= n; i++){
+                    cout << "Customer " << i << endl;
+                    customer[i-1].print();
+                }
+                system("pause"); break;
+            case 3:
+                isLoop = false; break;
+            default:
+                cout << "Masukkan pilihan menu 1 sampai 3 dengan tepat \n"; break;
+        }
+    }
+    return 0;
+}
